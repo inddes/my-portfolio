@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Linkedin, Github, Calendar, Send, CheckCircle2 } from 'lucide-react';
+import { Mail, Linkedin, Github, Send, CheckCircle2 } from 'lucide-react';
 import { contactInfo } from '../data/content';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { MeetingBooking } from './MeetingBooking';
