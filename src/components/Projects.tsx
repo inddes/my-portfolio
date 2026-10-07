@@ -32,10 +32,10 @@ const flagshipCapabilities = [
 ];
 
 const flagshipActions = [
-  { label: 'Live Demo', icon: ExternalLink, href: '#', available: false },
-  { label: 'GitHub', icon: Github, href: '#', available: false },
-  { label: 'Architecture', icon: Layers, href: '#', available: false },
-  { label: 'Technical Case Study', icon: FileText, href: '#', available: false },
+  { label: 'Live Demo', icon: ExternalLink, href: 'https://testpilot.space/', external: true },
+  { label: 'GitHub', icon: Github, href: 'https://github.com/inddes/Test-Copilot-App', external: true },
+  { label: 'Architecture', icon: Layers, href: '#test-copilot-architecture', external: false, scroll: true },
+  { label: 'Technical Case Study', icon: FileText, href: '/projects/test-copilot', external: false, navigate: true },
 ];
 
 const upcomingProjects = [
@@ -159,15 +159,55 @@ function FlagshipProject() {
         <div className="flex flex-wrap gap-3">
           {flagshipActions.map((action) => {
             const Icon = action.icon;
+
+            if (action.external) {
+              return (
+                <a
+                  key={action.label}
+                  href={action.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+                >
+                  <Icon size={16} />
+                  {action.label}
+                </a>
+              );
+            }
+
+            if (action.scroll) {
+              return (
+                <button
+                  key={action.label}
+                  onClick={() => {
+                    const element = document.getElementById('test-copilot-architecture');
+                    if (element) {
+                      const offset = 80;
+                      const elementPosition = element.getBoundingClientRect().top;
+                      const offsetPosition = elementPosition + window.pageYOffset - offset;
+                      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    }
+                  }}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium border border-slate-200 dark:border-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+                >
+                  <Icon size={16} />
+                  {action.label}
+                </button>
+              );
+            }
+
             return (
-              <span
+              <button
                 key={action.label}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-sm font-medium border border-slate-200 dark:border-slate-700 cursor-not-allowed"
-                title="Link will be available soon"
+                onClick={() => {
+                  window.history.pushState({}, '', action.href);
+                  window.dispatchEvent(new PopStateEvent('popstate'));
+                }}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium border border-slate-200 dark:border-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
               >
                 <Icon size={16} />
                 {action.label}
-              </span>
+              </button>
             );
           })}
         </div>
