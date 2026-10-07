@@ -1,11 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Calendar, Clock, Check, Loader2 } from 'lucide-react';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+let supabaseClient: SupabaseClient | null = null;
+
+function getSupabase(): SupabaseClient | null {
+  if (supabaseClient) return supabaseClient;
+  const url = import.meta.env.VITE_SUPABASE_URL;
+  const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  if (!url || !key) return null;
+  supabaseClient = createClient(url, key);
+  return supabaseClient;
+}
 
 const TIME_SLOTS = [
   '10:00',
@@ -58,6 +64,11 @@ export function MeetingBooking() {
   }, [selectedDate]);
 
   const fetchBookedSlots = async (date: string) => {
+    const supabase = getSupabase();
+    if (!supabase) {
+      setError('Booking system is not configured. Please try again later.');
+      return;
+    }
     const { data, error } = await supabase
       .from('meeting_bookings')
       .select('time_slot')
@@ -97,6 +108,12 @@ export function MeetingBooking() {
     }
 
     try {
+      const supabase = getSupabase();
+      if (!supabase) {
+        setError('Booking system is not configured. Please try again later.');
+        setIsSubmitting(false);
+        return;
+      }
       const { data: booking, error: dbError } = await supabase
         .from('meeting_bookings')
         .insert([
