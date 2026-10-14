@@ -3,13 +3,6 @@ import {
   ExternalLink,
   Github,
   TrendingUp,
-  FileText,
-  Layers,
-  AlertTriangle,
-  Wrench,
-  ShieldCheck,
-  ArrowUpRight,
-  Clock,
 } from 'lucide-react';
 import { projects } from '../data/content';
 import { Project } from '../types';
@@ -23,34 +16,11 @@ const categories = [
   { id: 'fullstack', label: 'Full-Stack' },
 ];
 
-const flagshipCapabilities = [
-  'LLM Integration',
-  'Prompt Engineering',
-  'Structured Outputs',
-  'AI Evaluation',
-  'API Integration',
-];
-
-const flagshipActions = [
-  { label: 'Live Demo', icon: ExternalLink, href: 'https://testpilot.space/', external: true },
-  { label: 'GitHub', icon: Github, href: 'https://github.com/inddes/Test-Copilot-App', external: true },
-  { label: 'Architecture', icon: Layers, href: '#test-copilot-architecture', external: false, scroll: true },
-  { label: 'Technical Case Study', icon: FileText, href: '/projects/test-copilot', external: false, navigate: true },
-];
-
-const upcomingProjects = [
-  {
-    title: 'Enterprise RAG Knowledge Assistant',
-    subtitle: 'Retrieval-augmented generation over internal knowledge bases',
-    description:
-      'A RAG system that grounds LLM responses in enterprise documentation, with chunking strategies, hybrid search, and citation tracking.',
-  },
-  {
-    title: 'Agentic AI Engineering Assistant',
-    subtitle: 'Multi-step reasoning agent for engineering workflows',
-    description:
-      'An AI agent that decomposes engineering tasks into steps, uses tools, and produces reviewable outputs with transparent reasoning traces.',
-  },
+const flagshipFocusAreas = [
+  'Generative AI',
+  'AI-assisted test design',
+  'Test scenarios and test cases',
+  'Software quality engineering',
 ];
 
 function FlagshipProject() {
@@ -80,185 +50,55 @@ function FlagshipProject() {
         {/* Title block */}
         <div className="mb-6 pr-20">
           <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-50 mb-2">
-            TEST COPILOT
+            Test Copilot
           </h3>
           <p className="text-lg sm:text-xl font-semibold text-blue-600 dark:text-blue-400 mb-4">
-            AI-Powered Software Testing Assistant
+            AI-Assisted Test Design Tool
           </p>
           <p className="text-base sm:text-lg leading-relaxed text-slate-600 dark:text-slate-300 max-w-3xl">
-            An AI application that converts software requirements into structured
-            testing assets, helping engineers accelerate test design while
-            maintaining human review and engineering judgement.
+            An AI-assisted test design tool that helps transform software
+            requirements and user scenarios into test scenarios and test cases.
+          </p>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+            Personal proof of concept exploring practical applications of
+            Generative AI in software testing.
           </p>
         </div>
 
-        {/* Capability tags */}
+        {/* Focus area tags */}
         <div className="flex flex-wrap gap-2 mb-8">
-          {flagshipCapabilities.map((cap) => (
+          {flagshipFocusAreas.map((area) => (
             <span
-              key={cap}
+              key={area}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm font-medium border border-blue-200 dark:border-blue-800/50"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-blue-500 dark:bg-blue-400" />
-              {cap}
+              {area}
             </span>
           ))}
         </div>
 
-        {/* Three compact insight areas */}
-        <div className="grid md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="p-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400">
-                <AlertTriangle size={16} />
-              </div>
-              <h4 className="text-sm font-bold uppercase tracking-wide text-slate-900 dark:text-slate-50">
-                Problem
-              </h4>
-            </div>
-            <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-              Requirement analysis and test design are repetitive, time-consuming
-              and inconsistent across engineering teams.
-            </p>
-          </div>
-
-          <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="p-1.5 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
-                <Wrench size={16} />
-              </div>
-              <h4 className="text-sm font-bold uppercase tracking-wide text-slate-900 dark:text-slate-50">
-                Engineering Approach
-              </h4>
-            </div>
-            <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-              Structured prompt orchestration transforms requirements into
-              consistent testing recommendations while keeping the workflow
-              modular and extensible.
-            </p>
-          </div>
-
-          <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="p-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">
-                <ShieldCheck size={16} />
-              </div>
-              <h4 className="text-sm font-bold uppercase tracking-wide text-slate-900 dark:text-slate-50">
-                Production Thinking
-              </h4>
-            </div>
-            <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-              Designed with future considerations for evaluation, guardrails,
-              observability, model abstraction, authentication and scalable
-              deployment.
-            </p>
-          </div>
-        </div>
-
         {/* Action buttons */}
         <div className="flex flex-wrap gap-3">
-          {flagshipActions.map((action) => {
-            const Icon = action.icon;
-
-            if (action.external) {
-              return (
-                <a
-                  key={action.label}
-                  href={action.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
-                >
-                  <Icon size={16} />
-                  {action.label}
-                </a>
-              );
-            }
-
-            if (action.scroll) {
-              return (
-                <button
-                  key={action.label}
-                  onClick={() => {
-                    const element = document.getElementById('test-copilot-architecture');
-                    if (element) {
-                      const offset = 80;
-                      const elementPosition = element.getBoundingClientRect().top;
-                      const offsetPosition = elementPosition + window.pageYOffset - offset;
-                      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                    }
-                  }}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium border border-slate-200 dark:border-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
-                >
-                  <Icon size={16} />
-                  {action.label}
-                </button>
-              );
-            }
-
-            return (
-              <button
-                key={action.label}
-                onClick={() => {
-                  window.history.pushState({}, '', action.href);
-                  window.dispatchEvent(new PopStateEvent('popstate'));
-                }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium border border-slate-200 dark:border-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
-              >
-                <Icon size={16} />
-                {action.label}
-              </button>
-            );
-          })}
+          <a
+            href="https://testpilot.space/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+          >
+            <ExternalLink size={16} />
+            Live Demo
+          </a>
+          <a
+            href="https://github.com/inddes/Test-Copilot-App"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-700 hover:bg-slate-800 dark:bg-slate-600 dark:hover:bg-slate-700 text-white text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+          >
+            <Github size={16} />
+            GitHub
+          </a>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function UpcomingProjectCard({
-  title,
-  subtitle,
-  description,
-  index,
-}: {
-  title: string;
-  subtitle: string;
-  description: string;
-  index: number;
-}) {
-  const { ref, isVisible } = useIntersectionObserver();
-
-  return (
-    <div
-      ref={ref}
-      className={`relative bg-slate-50 dark:bg-slate-800/40 rounded-xl p-6 border-2 border-dashed border-slate-300 dark:border-slate-700 transition-all duration-700 ${
-        isVisible
-          ? 'opacity-100 translate-y-0'
-          : 'opacity-0 translate-y-10'
-      }`}
-      style={{ transitionDelay: `${index * 100}ms` }}
-    >
-      <div className="flex items-center gap-2 mb-4">
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-bold uppercase tracking-wide">
-          <Clock size={12} />
-          In Development
-        </span>
-      </div>
-
-      <h4 className="text-xl font-bold text-slate-900 dark:text-slate-50 mb-1">
-        {title}
-      </h4>
-      <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-3">
-        {subtitle}
-      </p>
-      <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-        {description}
-      </p>
-
-      <div className="mt-5 flex items-center gap-1.5 text-sm text-slate-400 dark:text-slate-500 font-medium">
-        <ArrowUpRight size={16} />
-        Coming soon
       </div>
     </div>
   );
@@ -424,24 +264,6 @@ export function Projects() {
         {/* Flagship project */}
         <div className="mb-14">
           <FlagshipProject />
-        </div>
-
-        {/* Upcoming projects */}
-        <div className="mb-16">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-5">
-            On the Roadmap
-          </h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            {upcomingProjects.map((proj, index) => (
-              <UpcomingProjectCard
-                key={proj.title}
-                title={proj.title}
-                subtitle={proj.subtitle}
-                description={proj.description}
-                index={index}
-              />
-            ))}
-          </div>
         </div>
 
         {/* Earlier work */}
