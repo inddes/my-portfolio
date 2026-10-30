@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  CheckCircle2,
   ExternalLink,
   Github,
   TrendingUp,
@@ -16,14 +17,49 @@ const categories = [
   { id: 'fullstack', label: 'Full-Stack' },
 ];
 
-const flagshipFocusAreas = [
-  'Generative AI',
-  'AI-assisted test design',
-  'Test scenarios and test cases',
-  'Software quality engineering',
+interface FeaturedProjectData {
+  name: string;
+  subtitle: string;
+  description: string;
+  note?: string;
+  focusAreas: string[];
+  liveUrl?: string;
+  githubUrl?: string;
+}
+
+const featuredProjects: FeaturedProjectData[] = [
+  {
+    name: 'Test Copilot',
+    subtitle: 'AI-Assisted Test Design Tool',
+    description:
+      'An AI-assisted test design tool that helps transform software requirements and user scenarios into test scenarios and test cases.',
+    note: 'Personal proof of concept exploring practical applications of Generative AI in software testing.',
+    focusAreas: [
+      'Generative AI',
+      'AI-assisted test design',
+      'Test scenarios and test cases',
+      'Software quality engineering',
+    ],
+    liveUrl: 'https://testpilot.space/',
+    githubUrl: 'https://github.com/inddes/Test-Copilot-App',
+  },
+  {
+    name: 'Life Manual',
+    subtitle: 'Conversational AI Application',
+    description:
+      'A conversational AI application featuring a chatbot interface that enables users to interact through natural-language queries. The application uses Natural Language Processing to interpret user messages and AI-powered response generation to produce conversational replies, providing an accessible chat-based interface for interactive engagement.',
+    focusAreas: [
+      'Conversational AI',
+      'Chatbot interface',
+      'Natural Language Processing',
+      'AI-powered response generation',
+      'Interactive user experience',
+    ],
+    liveUrl: 'https://lifemanual.online/',
+  },
 ];
 
-function FlagshipProject() {
+function FeaturedProjectCard({ project }: { project: FeaturedProjectData }) {
   const { ref, isVisible } = useIntersectionObserver();
 
   return (
@@ -38,11 +74,11 @@ function FlagshipProject() {
       {/* Accent bar */}
       <div className="h-1.5 bg-gradient-to-r from-blue-600 via-blue-500 to-emerald-500" />
 
-      {/* Flagship badge */}
+      {/* Completed badge */}
       <div className="absolute top-6 right-6 z-10">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-600 text-white text-xs font-bold uppercase tracking-wide shadow-lg">
-          <TrendingUp size={14} />
-          Flagship
+        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-600 text-white text-xs font-bold uppercase tracking-wide shadow-lg">
+          <CheckCircle2 size={14} />
+          Completed
         </span>
       </div>
 
@@ -50,24 +86,24 @@ function FlagshipProject() {
         {/* Title block */}
         <div className="mb-6 pr-20">
           <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-50 mb-2">
-            Test Copilot
+            {project.name}
           </h3>
           <p className="text-lg sm:text-xl font-semibold text-blue-600 dark:text-blue-400 mb-4">
-            AI-Assisted Test Design Tool
+            {project.subtitle}
           </p>
           <p className="text-base sm:text-lg leading-relaxed text-slate-600 dark:text-slate-300 max-w-3xl">
-            An AI-assisted test design tool that helps transform software
-            requirements and user scenarios into test scenarios and test cases.
+            {project.description}
           </p>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
-            Personal proof of concept exploring practical applications of
-            Generative AI in software testing.
-          </p>
+          {project.note && (
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
+              {project.note}
+            </p>
+          )}
         </div>
 
         {/* Focus area tags */}
         <div className="flex flex-wrap gap-2 mb-8">
-          {flagshipFocusAreas.map((area) => (
+          {project.focusAreas.map((area) => (
             <span
               key={area}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm font-medium border border-blue-200 dark:border-blue-800/50"
@@ -79,26 +115,32 @@ function FlagshipProject() {
         </div>
 
         {/* Action buttons */}
-        <div className="flex flex-wrap gap-3">
-          <a
-            href="https://testpilot.space/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
-          >
-            <ExternalLink size={16} />
-            Live Demo
-          </a>
-          <a
-            href="https://github.com/inddes/Test-Copilot-App"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-700 hover:bg-slate-800 dark:bg-slate-600 dark:hover:bg-slate-700 text-white text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
-          >
-            <Github size={16} />
-            GitHub
-          </a>
-        </div>
+        {(project.liveUrl || project.githubUrl) && (
+          <div className="flex flex-wrap gap-3">
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+              >
+                <ExternalLink size={16} />
+                Live Demo
+              </a>
+            )}
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-700 hover:bg-slate-800 dark:bg-slate-600 dark:hover:bg-slate-700 text-white text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+              >
+                <Github size={16} />
+                GitHub
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -261,9 +303,11 @@ export function Projects() {
           </p>
         </div>
 
-        {/* Flagship project */}
-        <div className="mb-14">
-          <FlagshipProject />
+        {/* Featured projects */}
+        <div className="space-y-8 mb-14">
+          {featuredProjects.map((project) => (
+            <FeaturedProjectCard key={project.name} project={project} />
+          ))}
         </div>
 
         {/* Earlier work */}
