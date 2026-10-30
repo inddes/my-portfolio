@@ -56,6 +56,7 @@ const featuredProjects: FeaturedProjectData[] = [
       'Interactive user experience',
     ],
     liveUrl: 'https://lifemanual.online/',
+    githubUrl: 'https://github.com/inddes/LifeManual-GJ-App',
   },
 ];
 
