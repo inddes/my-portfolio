@@ -10,14 +10,7 @@ const specialties = [
   'APIs',
 ];
 
-const strengths = [
-  'Generative AI & LLM application development',
-  'Retrieval-Augmented Generation (RAG)',
-  'AI agents & intelligent workflow orchestration',
-  'Python & API engineering',
-  'Software quality, automation & CI/CD',
-  'Reliable and maintainable software systems',
-];
+
 
 export function Hero() {
   const { ref, isVisible } = useIntersectionObserver();
@@ -71,15 +64,13 @@ export function Hero() {
             </span>
           </div>
 
-          {/* Main headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] whitespace-nowrap text-slate-900 dark:text-slate-50 mb-5">
-            AI Engineer{' '}
-            <span className="text-slate-300 dark:text-slate-700 font-bold">|</span>{' '}
-            <span className="text-blue-600 dark:text-blue-400">Generative AI Engineer</span>
+          {/* Main headline — dominant visual element */}
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.05] text-slate-900 dark:text-slate-50 mb-4">
+            AI Engineer
           </h1>
 
-          {/* Supporting headline — specialty line */}
-          <div className="mb-8 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 font-mono text-sm sm:text-base text-slate-500 dark:text-slate-400">
+          {/* Supporting technical headline */}
+          <div className="mb-5 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 font-mono text-sm sm:text-base md:text-lg text-slate-500 dark:text-slate-400">
             {specialties.map((spec, index) => (
               <span key={spec} className="flex items-center gap-x-2.5">
                 <span className="font-medium text-slate-600 dark:text-slate-300">{spec}</span>
@@ -89,6 +80,11 @@ export function Hero() {
               </span>
             ))}
           </div>
+
+          {/* Professional tagline */}
+          <p className="text-base sm:text-lg md:text-xl font-medium text-slate-700 dark:text-slate-300 mb-8 max-w-2xl">
+            Building reliable AI products with a production engineering mindset.
+          </p>
 
           {/* Introduction */}
           <div className="space-y-4 mb-10 max-w-3xl">
@@ -101,16 +97,6 @@ export function Hero() {
               I am now focused on developing Generative AI applications, intelligent workflows and production-oriented AI solutions, combining modern AI technologies with strong software engineering principles.
             </p>
           </div>
-
-          {/* Key positioning strengths */}
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 mb-10 max-w-3xl">
-            {strengths.map((strength) => (
-              <li key={strength} className="flex items-start gap-2.5 text-sm sm:text-base text-slate-600 dark:text-slate-400">
-                <span className="mt-1.5 flex-shrink-0 h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-blue-400" />
-                <span>{strength}</span>
-              </li>
-            ))}
-          </ul>
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-16">
