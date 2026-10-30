@@ -10,6 +10,15 @@ const specialties = [
   'APIs',
 ];
 
+const strengths = [
+  'Generative AI & LLM application development',
+  'Retrieval-Augmented Generation (RAG)',
+  'AI agents & intelligent workflow orchestration',
+  'Python & API engineering',
+  'Software quality, automation & CI/CD',
+  'Reliable and maintainable software systems',
+];
+
 export function Hero() {
   const { ref, isVisible } = useIntersectionObserver();
 
@@ -62,42 +71,46 @@ export function Hero() {
             </span>
           </div>
 
-          {/* Role label — visually emphasized */}
-          <div className="mb-4">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-blue-600 dark:text-blue-400">
-              AI Engineer
-            </h2>
-          </div>
+          {/* Main headline */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] text-slate-900 dark:text-slate-50 mb-5">
+            AI Engineer{' '}
+            <span className="text-slate-300 dark:text-slate-700 font-bold">|</span>{' '}
+            <span className="text-blue-600 dark:text-blue-400">Generative AI Engineer</span>
+          </h1>
 
-          {/* Specialty line */}
-          <div className="mb-8 flex flex-wrap items-center gap-x-2 gap-y-1.5 font-mono text-sm sm:text-base text-slate-500 dark:text-slate-400">
+          {/* Supporting headline — specialty line */}
+          <div className="mb-8 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 font-mono text-sm sm:text-base text-slate-500 dark:text-slate-400">
             {specialties.map((spec, index) => (
-              <span key={spec} className="flex items-center gap-x-2">
-                <span className="font-medium">{spec}</span>
+              <span key={spec} className="flex items-center gap-x-2.5">
+                <span className="font-medium text-slate-600 dark:text-slate-300">{spec}</span>
                 {index < specialties.length - 1 && (
-                  <span className="text-slate-300 dark:text-slate-700 select-none">•</span>
+                  <span className="text-blue-500 dark:text-blue-500/70 select-none">|</span>
                 )}
               </span>
             ))}
           </div>
 
-          {/* Main headline — largest, strongest text */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold tracking-tight leading-[1.15] text-slate-900 dark:text-slate-50 mb-8 max-w-4xl">
-            Building reliable AI products with a{' '}
-            <span className="relative whitespace-nowrap">
-              production
-              <span className="absolute -bottom-0.5 left-0 right-0 h-[3px] bg-blue-600 dark:bg-blue-400/80 rounded-full" />
-            </span>{' '}
-            engineering mindset.
-          </h1>
+          {/* Introduction */}
+          <div className="space-y-4 mb-10 max-w-3xl">
+            <p className="text-base sm:text-lg leading-relaxed text-slate-600 dark:text-slate-400">
+              I am a software and automation engineer with{' '}
+              <span className="font-semibold text-slate-700 dark:text-slate-300">12+ years of experience</span>{' '}
+              building enterprise software solutions, API integrations, automation frameworks and reliable engineering systems.
+            </p>
+            <p className="text-base sm:text-lg leading-relaxed text-slate-600 dark:text-slate-400">
+              I am now focused on developing Generative AI applications, intelligent workflows and production-oriented AI solutions, combining modern AI technologies with strong software engineering principles.
+            </p>
+          </div>
 
-          {/* Supporting paragraph */}
-          <p className="text-base sm:text-lg leading-relaxed text-slate-600 dark:text-slate-400 mb-10 max-w-3xl">
-            Software and automation engineer with 12+ years of experience across
-            enterprise APIs, cloud, CI/CD and software quality, now specialising
-            in Generative AI applications, intelligent workflows and
-            production-oriented AI engineering.
-          </p>
+          {/* Key positioning strengths */}
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 mb-10 max-w-3xl">
+            {strengths.map((strength) => (
+              <li key={strength} className="flex items-start gap-2.5 text-sm sm:text-base text-slate-600 dark:text-slate-400">
+                <span className="mt-1.5 flex-shrink-0 h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-blue-400" />
+                <span>{strength}</span>
+              </li>
+            ))}
+          </ul>
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-16">
@@ -117,7 +130,6 @@ export function Hero() {
               <Github size={18} />
               View GitHub
             </a>
-
           </div>
         </div>
       </div>
