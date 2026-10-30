@@ -1,4 +1,4 @@
-import { ArrowDown, Github, FileDown, FolderGit2 } from 'lucide-react';
+import { ArrowDown, Github, FolderGit2 } from 'lucide-react';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { contactInfo } from '../data/content';
 
@@ -117,14 +117,7 @@ export function Hero() {
               <Github size={18} />
               View GitHub
             </a>
-            <a
-              href="/cv.pdf"
-              download
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 rounded-lg font-semibold text-sm sm:text-base transition-colors"
-            >
-              <FileDown size={18} />
-              Download CV
-            </a>
+
           </div>
         </div>
       </div>
