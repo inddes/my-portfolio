@@ -72,7 +72,7 @@ export function Hero() {
           </div>
 
           {/* Main headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] text-slate-900 dark:text-slate-50 mb-5">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] whitespace-nowrap text-slate-900 dark:text-slate-50 mb-5">
             AI Engineer{' '}
             <span className="text-slate-300 dark:text-slate-700 font-bold">|</span>{' '}
             <span className="text-blue-600 dark:text-blue-400">Generative AI Engineer</span>
