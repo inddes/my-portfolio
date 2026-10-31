@@ -1,4 +1,4 @@
-import { Project, SkillCategory, Testimonial, ContactInfo } from '../types';
+import { Project, Testimonial, ContactInfo } from '../types';
 
 export const projects: Project[] = [
   {
@@ -131,45 +131,6 @@ export const projects: Project[] = [
       'Advanced filtering and search',
       'Time tracking and reporting',
       'Third-party tool integrations'
-    ]
-  }
-];
-
-export const skillCategories: SkillCategory[] = [
-  {
-    title: 'AI Automation & Workflow Orchestration',
-    skills: [
-      { name: 'n8n', icon: 'Workflow', description: 'Advanced workflow automation, custom nodes, complex integrations' },
-      { name: 'Make (Integromat)', icon: 'GitBranch', description: 'Scenario building, API integrations, automation logic' },
-      { name: 'Zapier', icon: 'Zap', description: 'Multi-app workflows, trigger-action automation' },
-      { name: 'ChatGPT API', icon: 'MessageSquare', description: 'Natural language processing and generation' },
-      { name: 'Claude API', icon: 'Bot', description: 'Advanced AI reasoning and content generation' },
-      { name: 'OpenAI Assistant', icon: 'Brain', description: 'AI agent development and fine-tuning' }
-    ]
-  },
-  {
-    title: 'Development & Infrastructure',
-    skills: [
-      { name: 'Docker', icon: 'Container', description: 'Containerization, deployment, orchestration' },
-      { name: 'Git & GitHub', icon: 'GitCommit', description: 'Version control, CI/CD, collaboration' },
-      { name: 'Cursor AI', icon: 'Code', description: 'AI-assisted development and code generation' },
-      { name: 'VS Code', icon: 'FileCode', description: 'Advanced IDE configuration and extensions' },
-      { name: 'Linux/Ubuntu', icon: 'Terminal', description: 'Server management, bash scripting' },
-      { name: 'Cloud Platforms', icon: 'Cloud', description: 'AWS, Google Cloud, DigitalOcean' }
-    ]
-  },
-  {
-    title: 'Technical Skills',
-    skills: [
-      { name: 'Web Development', icon: 'Globe', description: 'Full-stack web applications, responsive design' },
-      { name: 'JavaScript/TypeScript', icon: 'FileJson', description: 'Full-stack development' },
-      { name: 'Python', icon: 'Code2', description: 'Automation scripts, data processing' },
-      { name: 'React', icon: 'Layout', description: 'Modern UI development' },
-      { name: 'Node.js', icon: 'Server', description: 'Backend APIs and services' },
-      { name: 'PostgreSQL/MySQL', icon: 'Database', description: 'Database design and optimization' },
-      { name: 'REST APIs', icon: 'Network', description: 'API design, integration, documentation' },
-      { name: 'Webhooks', icon: 'Webhook', description: 'Real-time event-driven architecture' },
-      { name: 'Authentication', icon: 'Lock', description: 'OAuth, JWT, security best practices' }
     ]
   }
 ];
