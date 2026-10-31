@@ -3,6 +3,7 @@ import { Hero } from './components/Hero';
 import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
 import { Roadmap } from './components/Roadmap';
+import { Experience } from './components/Experience';
 import { Process } from './components/Process';
 import { About } from './components/About';
 import { Contact } from './components/Contact';
@@ -17,6 +18,7 @@ function App() {
         <Projects />
         <Roadmap />
         <Skills />
+        <Experience />
         <Process />
         <About />
         <Contact />
