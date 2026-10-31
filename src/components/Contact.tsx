@@ -1,8 +1,39 @@
 import { useState } from 'react';
-import { Mail, Linkedin, Github, Send, CheckCircle2 } from 'lucide-react';
+import {
+  Mail,
+  Linkedin,
+  Github,
+  Send,
+  CheckCircle2,
+  ArrowUpRight,
+} from 'lucide-react';
 import { contactInfo } from '../data/content';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { MeetingBooking } from './MeetingBooking';
+
+const contactOptions = [
+  {
+    icon: Github,
+    label: 'GitHub',
+    value: 'View GitHub Profile',
+    href: contactInfo.github,
+    external: true,
+  },
+  {
+    icon: Linkedin,
+    label: 'LinkedIn',
+    value: 'Connect on LinkedIn',
+    href: contactInfo.linkedin,
+    external: true,
+  },
+  {
+    icon: Mail,
+    label: 'Email',
+    value: contactInfo.email,
+    href: `mailto:${contactInfo.email}`,
+    external: false,
+  },
+];
 
 export function Contact() {
   const { ref, isVisible } = useIntersectionObserver();
@@ -10,7 +41,7 @@ export function Contact() {
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -53,7 +84,7 @@ export function Contact() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -77,89 +108,66 @@ export function Contact() {
               : 'opacity-0 translate-y-10'
           }`}
         >
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-50 mb-4">
-              Let's Work Together
+          {/* Section header */}
+          <div className="mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-slate-50 mb-4">
+              Let&rsquo;s Connect
             </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-              Ready to automate your workflows? Let's discuss how I can help transform your business operations.
+            <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl">
+              Interested in AI engineering, Generative AI applications,
+              intelligent automation or collaboration? I&rsquo;d be happy to
+              connect and discuss opportunities.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-5 gap-8 mb-12">
-            <div className="md:col-span-2 space-y-6">
-              <div className="bg-white dark:bg-slate-900 rounded-xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-                  Contact Information
-                </h3>
-                <div className="space-y-4">
+          <div className="grid lg:grid-cols-5 gap-8 mb-12">
+            {/* Contact options */}
+            <div className="lg:col-span-2 space-y-4">
+              {contactOptions.map((option) => {
+                const Icon = option.icon;
+                return (
                   <a
-                    href={`mailto:${contactInfo.email}`}
-                    className="flex items-center gap-4 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors group"
+                    key={option.label}
+                    href={option.href}
+                    {...(option.external
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
+                    className="group flex items-center gap-4 p-5 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all"
                   >
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg">
-                      <Mail size={20} />
+                    <div className="flex-shrink-0 p-3 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-colors">
+                      <Icon size={22} />
                     </div>
-                    <div className="flex-1">
-                      <p className="text-xs text-slate-500 dark:text-slate-400">
-                        Email
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                        {option.label}
                       </p>
-                      <p className="text-slate-700 dark:text-slate-300 font-medium group-hover:text-blue-600 dark:group-hover:text-blue-400">
-                        {contactInfo.email}
+                      <p className="text-slate-700 dark:text-slate-300 font-medium truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        {option.value}
                       </p>
                     </div>
+                    {option.external && (
+                      <ArrowUpRight
+                        size={18}
+                        className="flex-shrink-0 text-slate-400 dark:text-slate-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"
+                      />
+                    )}
                   </a>
-
-                  <a
-                    href={contactInfo.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-4 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors group"
-                  >
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg">
-                      <Linkedin size={20} />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-xs text-slate-500 dark:text-slate-400">
-                        LinkedIn
-                      </p>
-                      <p className="text-slate-700 dark:text-slate-300 font-medium group-hover:text-blue-600 dark:group-hover:text-blue-400">
-                        Connect on LinkedIn
-                      </p>
-                    </div>
-                  </a>
-
-                  <a
-                    href={contactInfo.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-4 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors group"
-                  >
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg">
-                      <Github size={20} />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-xs text-slate-500 dark:text-slate-400">
-                        GitHub
-                      </p>
-                      <p className="text-slate-700 dark:text-slate-300 font-medium group-hover:text-blue-600 dark:group-hover:text-blue-400">
-                        View GitHub Profile
-                      </p>
-                    </div>
-                  </a>
-                </div>
-              </div>
+                );
+              })}
 
               <div className="bg-gradient-to-br from-blue-600 to-emerald-600 dark:from-blue-500 dark:to-emerald-500 rounded-xl p-6 text-white">
-                <p className="font-semibold mb-2">{contactInfo.availability}</p>
-                <p className="text-sm text-blue-100">{contactInfo.responseTime}</p>
+                <p className="font-semibold mb-1">{contactInfo.availability}</p>
+                <p className="text-sm text-blue-100">
+                  {contactInfo.responseTime}
+                </p>
               </div>
             </div>
 
-            <div className="md:col-span-3">
+            {/* Contact form */}
+            <div className="lg:col-span-3">
               <form
                 onSubmit={handleSubmit}
-                className="bg-white dark:bg-slate-900 rounded-xl p-8 shadow-lg border border-slate-200 dark:border-slate-700"
+                className="bg-white dark:bg-slate-900 rounded-xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700"
               >
                 {isSubmitted ? (
                   <div className="text-center py-12">
@@ -170,11 +178,12 @@ export function Contact() {
                       Message Sent!
                     </h3>
                     <p className="text-slate-600 dark:text-slate-400">
-                      Thank you for reaching out. I'll get back to you soon.
+                      Thank you for reaching out. I&rsquo;ll get back to you
+                      soon.
                     </p>
                   </div>
                 ) : (
-                  <div className="space-y-6">
+                  <div className="space-y-5">
                     <div>
                       <label
                         htmlFor="name"
@@ -221,7 +230,9 @@ export function Contact() {
                         placeholder="your.email@example.com"
                       />
                       {errors.email && (
-                        <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.email}
+                        </p>
                       )}
                     </div>
 
@@ -246,7 +257,9 @@ export function Contact() {
                         placeholder="How can I help?"
                       />
                       {errors.subject && (
-                        <p className="mt-1 text-sm text-red-500">{errors.subject}</p>
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.subject}
+                        </p>
                       )}
                     </div>
 
@@ -271,7 +284,9 @@ export function Contact() {
                         placeholder="Tell me about your project..."
                       />
                       {errors.message && (
-                        <p className="mt-1 text-sm text-red-500">{errors.message}</p>
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.message}
+                        </p>
                       )}
                     </div>
 

@@ -5,9 +5,10 @@ const navLinks = [
   { id: 'home', label: 'Home' },
   { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
+  { id: 'experience', label: 'Experience' },
   { id: 'process', label: 'Process' },
   { id: 'about', label: 'About' },
-  { id: 'contact', label: 'Contact' }
+  { id: 'contact', label: 'Contact' },
 ];
 
 export function Footer() {
@@ -27,12 +28,15 @@ export function Footer() {
     <footer className="bg-slate-900 dark:bg-slate-950 text-slate-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
+          {/* Identity */}
           <div>
             <h3 className="text-2xl font-bold text-gradient from-blue-400 to-emerald-400 mb-4">
-              AI Automation
+              AI Engineer
             </h3>
             <p className="text-slate-400 mb-4">
-              Building intelligent automation systems that drive business results through workflow orchestration and AI integration.
+              Building reliable AI products with a production engineering
+              mindset -- from Generative AI applications to intelligent
+              automation.
             </p>
             <div className="flex gap-3">
               <a
@@ -63,6 +67,7 @@ export function Footer() {
             </div>
           </div>
 
+          {/* Quick links */}
           <div>
             <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
             <ul className="space-y-2">
@@ -79,14 +84,11 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* Get in touch */}
           <div>
             <h4 className="text-lg font-semibold text-white mb-4">Get In Touch</h4>
-            <p className="text-slate-400 mb-2">
-              {contactInfo.availability}
-            </p>
-            <p className="text-slate-400 mb-4">
-              {contactInfo.responseTime}
-            </p>
+            <p className="text-slate-400 mb-2">{contactInfo.availability}</p>
+            <p className="text-slate-400 mb-4">{contactInfo.responseTime}</p>
             <a
               href={`mailto:${contactInfo.email}`}
               className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
@@ -98,13 +100,9 @@ export function Footer() {
 
         <div className="border-t border-slate-800 pt-8 text-center">
           <p className="text-slate-400 flex items-center justify-center gap-2 flex-wrap">
-            <span>
-              {currentYear} AI Automation Portfolio. Built with
-            </span>
+            <span>{currentYear} AI Engineer Portfolio. Built with</span>
             <Heart size={16} className="text-red-500 inline" />
-            <span>
-              using React, TypeScript, and Tailwind CSS
-            </span>
+            <span>using React, TypeScript, and Tailwind CSS</span>
           </p>
         </div>
       </div>

@@ -81,13 +81,6 @@ export function About() {
                 </div>
               </div>
 
-              <a
-                href="/resume.pdf"
-                download
-                className="block w-full px-6 py-4 bg-slate-900 dark:bg-slate-700 hover:bg-slate-800 dark:hover:bg-slate-600 text-white rounded-lg font-semibold text-center transition-colors shadow-lg hover:shadow-xl"
-              >
-                Download Resume
-              </a>
             </div>
           </div>
         </div>
