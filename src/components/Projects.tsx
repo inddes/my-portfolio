@@ -22,7 +22,6 @@ interface FeaturedProjectData {
   subtitle: string;
   description: string;
   note?: string;
-  techStack: string[];
   focusAreas: string[];
   liveUrl?: string;
   githubUrl?: string;
@@ -35,7 +34,6 @@ const featuredProjects: FeaturedProjectData[] = [
     description:
       'An AI-assisted test design tool that helps transform software requirements and user scenarios into test scenarios and test cases.',
     note: 'Personal proof of concept exploring practical applications of Generative AI in software testing.',
-    techStack: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Supabase', 'PDF.js', 'Mammoth', 'XLSX'],
     focusAreas: [
       'Generative AI',
       'AI-assisted test design',
@@ -50,7 +48,6 @@ const featuredProjects: FeaturedProjectData[] = [
     subtitle: 'Conversational AI Application',
     description:
       'A conversational AI application featuring a chatbot interface that enables users to interact through natural-language queries. The application uses Natural Language Processing to interpret user messages and AI-powered response generation to produce conversational replies, providing an accessible chat-based interface for interactive engagement.',
-    techStack: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Supabase', 'React Router'],
     focusAreas: [
       'Conversational AI',
       'Chatbot interface',
@@ -103,18 +100,6 @@ function FeaturedProjectCard({ project }: { project: FeaturedProjectData }) {
               {project.note}
             </p>
           )}
-        </div>
-
-        {/* Tech stack tags */}
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.techStack.map((tech) => (
-            <span
-              key={tech}
-              className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium border border-slate-200 dark:border-slate-700"
-            >
-              {tech}
-            </span>
-          ))}
         </div>
 
         {/* Focus area tags */}
