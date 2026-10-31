@@ -3,8 +3,9 @@ import { contactInfo } from '../data/content';
 
 const navLinks = [
   { id: 'home', label: 'Home' },
-  { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
+  { id: 'roadmap', label: 'Roadmap' },
+  { id: 'skills', label: 'Skills' },
   { id: 'experience', label: 'Experience' },
   { id: 'process', label: 'Process' },
   { id: 'about', label: 'About' },

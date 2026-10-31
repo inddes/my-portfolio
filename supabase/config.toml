@@ -1,0 +1,3 @@
+[functions.book-meeting]
+verify_jwt = false
+entrypoint = "./functions/book-meeting/index.ts"

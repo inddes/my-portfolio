@@ -6,10 +6,24 @@ import {
   Send,
   CheckCircle2,
   ArrowUpRight,
+  Loader2,
+  AlertCircle,
 } from 'lucide-react';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { contactInfo } from '../data/content';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { MeetingBooking } from './MeetingBooking';
+
+let supabaseClient: SupabaseClient | null = null;
+
+function getSupabase(): SupabaseClient | null {
+  if (supabaseClient) return supabaseClient;
+  const url = import.meta.env.VITE_SUPABASE_URL;
+  const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  if (!url || !key) return null;
+  supabaseClient = createClient(url, key);
+  return supabaseClient;
+}
 
 const contactOptions = [
   {
@@ -43,7 +57,9 @@ export function Contact() {
     subject: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validateForm = () => {
@@ -71,15 +87,41 @@ export function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError('');
 
-    if (validateForm()) {
-      console.log('Form submitted:', formData);
+    if (!validateForm()) return;
+
+    const supabase = getSupabase();
+    if (!supabase) {
+      setSubmitError(
+        'The contact form is temporarily unavailable. Please try again later or email directly.',
+      );
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase.from('contact_submissions').insert({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        subject: formData.subject.trim(),
+        message: formData.message.trim(),
+      });
+
+      if (error) throw error;
+
       setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
-
       setTimeout(() => setIsSubmitted(false), 5000);
+    } catch {
+      setSubmitError(
+        'Failed to send your message. Please try again or email directly.',
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -197,15 +239,18 @@ export function Contact() {
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
+                        disabled={isSubmitting}
                         className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border ${
                           errors.name
                             ? 'border-red-500'
                             : 'border-slate-300 dark:border-slate-700'
-                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-900 dark:text-slate-50`}
+                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-900 dark:text-slate-50 disabled:opacity-60`}
                         placeholder="Your name"
                       />
                       {errors.name && (
-                        <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.name}
+                        </p>
                       )}
                     </div>
 
@@ -222,11 +267,12 @@ export function Contact() {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
+                        disabled={isSubmitting}
                         className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border ${
                           errors.email
                             ? 'border-red-500'
                             : 'border-slate-300 dark:border-slate-700'
-                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-900 dark:text-slate-50`}
+                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-900 dark:text-slate-50 disabled:opacity-60`}
                         placeholder="your.email@example.com"
                       />
                       {errors.email && (
@@ -249,11 +295,12 @@ export function Contact() {
                         name="subject"
                         value={formData.subject}
                         onChange={handleChange}
+                        disabled={isSubmitting}
                         className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border ${
                           errors.subject
                             ? 'border-red-500'
                             : 'border-slate-300 dark:border-slate-700'
-                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-900 dark:text-slate-50`}
+                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-900 dark:text-slate-50 disabled:opacity-60`}
                         placeholder="How can I help?"
                       />
                       {errors.subject && (
@@ -275,12 +322,13 @@ export function Contact() {
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
+                        disabled={isSubmitting}
                         rows={6}
                         className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border ${
                           errors.message
                             ? 'border-red-500'
                             : 'border-slate-300 dark:border-slate-700'
-                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-900 dark:text-slate-50 resize-none`}
+                        } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-900 dark:text-slate-50 resize-none disabled:opacity-60`}
                         placeholder="Tell me about your project..."
                       />
                       {errors.message && (
@@ -290,12 +338,32 @@ export function Contact() {
                       )}
                     </div>
 
+                    {submitError && (
+                      <div className="flex items-start gap-3 bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-700 text-red-700 dark:text-red-300 px-4 py-3 rounded-lg">
+                        <AlertCircle
+                          size={20}
+                          className="flex-shrink-0 mt-0.5"
+                        />
+                        <p className="text-sm">{submitError}</p>
+                      </div>
+                    )}
+
                     <button
                       type="submit"
-                      className="w-full px-6 py-4 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-lg font-semibold text-lg transition-colors shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                      disabled={isSubmitting}
+                      className="w-full px-6 py-4 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-lg font-semibold text-lg transition-colors shadow-lg hover:shadow-xl flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      <Send size={20} />
-                      Send Message
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 size={20} className="animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Send size={20} />
+                          Send Message
+                        </>
+                      )}
                     </button>
                   </div>
                 )}

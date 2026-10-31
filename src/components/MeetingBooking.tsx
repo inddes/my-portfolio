@@ -66,7 +66,7 @@ export function MeetingBooking() {
   const fetchBookedSlots = async (date: string) => {
     const supabase = getSupabase();
     if (!supabase) {
-      setError('Booking system is not configured. Please try again later.');
+      setError('Unable to load available time slots. Please try again later.');
       return;
     }
     const { data, error } = await supabase
@@ -76,11 +76,13 @@ export function MeetingBooking() {
       .in('status', ['pending', 'confirmed']);
 
     if (error) {
-      console.error('Error fetching booked slots:', error);
+      setBookedSlots(new Set());
       return;
     }
 
-    const slots = new Set(data.map((booking) => booking.time_slot));
+    const slots = new Set(
+      (data ?? []).map((booking) => booking.time_slot),
+    );
     setBookedSlots(slots);
   };
 
@@ -110,7 +112,7 @@ export function MeetingBooking() {
     try {
       const supabase = getSupabase();
       if (!supabase) {
-        setError('Booking system is not configured. Please try again later.');
+        setError('Unable to process your booking. Please try again later.');
         setIsSubmitting(false);
         return;
       }
@@ -129,7 +131,18 @@ export function MeetingBooking() {
         .select()
         .single();
 
-      if (dbError) throw dbError;
+      if (dbError) {
+        if (dbError.code === '23505') {
+          setError(
+            'This time slot has already been booked. Please select a different time.',
+          );
+          fetchBookedSlots(formData.date);
+        } else {
+          throw dbError;
+        }
+        setIsSubmitting(false);
+        return;
+      }
 
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/book-meeting`,
