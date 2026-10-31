@@ -1,121 +1,106 @@
-import { Compass, Lightbulb } from 'lucide-react';
+import { Compass, Lightbulb, Target } from 'lucide-react';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 
 interface RoadmapProject {
   number: string;
   name: string;
-  description: string;
+  purpose: string;
   techFocus: string[];
-  problem: string;
 }
 
 const roadmapProjects: RoadmapProject[] = [
   {
     number: '01',
     name: 'Enterprise Knowledge Assistant',
-    description:
-      'An AI-powered document knowledge assistant that allows users to ask questions about documents and receive context-aware answers with supporting source citations.',
+    purpose:
+      'Build a document question-answering application using Retrieval-Augmented Generation (RAG), embeddings, vector search and grounded responses with source citations.',
     techFocus: [
-      'Python',
-      'LangChain',
-      'FastAPI',
       'RAG',
       'Embeddings',
-      'Vector Database',
-      'LLM APIs',
+      'Vector Search',
+      'Source Citations',
+      'Python',
     ],
-    problem:
-      'Organisations hold large volumes of internal documentation that is hard to search and navigate. Users waste time manually reading through documents to find answers. This project aims to provide a natural-language interface that retrieves relevant context and returns answers grounded in the source material, with citations so users can verify the information.',
   },
   {
     number: '02',
     name: 'Intelligent Document Processing API',
-    description:
-      'An intelligent document processing application that extracts structured information from documents and validates the results against defined schemas.',
+    purpose:
+      'Build an API that extracts structured information from documents using LLMs, structured outputs, Pydantic validation and robust error handling.',
     techFocus: [
-      'Python',
+      'LLM Structured Outputs',
+      'Pydantic Validation',
       'FastAPI',
-      'Pydantic',
-      'LLM APIs',
-      'Structured Outputs',
+      'Error Handling',
+      'Python',
     ],
-    problem:
-      'Manual data entry from unstructured documents is slow, error-prone and does not scale. This project aims to automate extraction of structured fields from documents while enforcing schema validation, so downstream systems receive clean, predictable data without human intervention.',
   },
   {
     number: '03',
     name: 'LLM Evaluation & Observability Platform',
-    description:
-      'An evaluation and monitoring platform for measuring LLM response quality, tracking latency and token usage, and identifying prompt or model regressions.',
+    purpose:
+      'Build an evaluation and monitoring system to measure LLM response quality, latency, token usage and prompt/model regressions.',
     techFocus: [
-      'Python',
       'LLM Evaluation',
-      'LangSmith or Langfuse',
-      'CI/CD',
-      'Observability',
+      'Latency Monitoring',
+      'Token Usage Tracking',
+      'Regression Detection',
+      'Python',
     ],
-    problem:
-      'As LLM-powered applications evolve, prompt changes and model updates can silently degrade output quality. Without structured evaluation and observability, regressions go unnoticed until they reach users. This project aims to provide a systematic way to score, track and alert on LLM performance over time.',
   },
   {
     number: '04',
     name: 'AI Incident Investigation Agent',
-    description:
-      'An AI-assisted incident investigation application that analyses application logs and incident information to identify potential causes and prepare investigation reports.',
+    purpose:
+      'Build an AI agent that analyses application logs and incident information, uses tools to investigate potential causes and produces evidence-based investigation reports.',
     techFocus: [
-      'Python',
-      'LangGraph',
       'Agentic AI',
+      'LangGraph',
       'Tool Calling',
-      'APIs',
+      'Log Analysis',
+      'Python',
     ],
-    problem:
-      'Incident investigation often requires correlating information across logs, alerts and monitoring tools, which is time-consuming under pressure. This project aims to assist engineers by automatically gathering and reasoning over incident data, surfacing likely causes and producing structured investigation reports.',
   },
   {
     number: '05',
     name: 'Multi-LLM Model Comparison Gateway',
-    description:
-      'A common API layer for interacting with multiple LLM providers and comparing their response quality, latency and usage costs.',
+    purpose:
+      'Build a common API gateway that integrates multiple LLM providers and compares model responses, latency and cost.',
     techFocus: [
-      'Python',
+      'Multi-Provider Integration',
+      'Model Comparison',
+      'Latency & Cost Analysis',
       'FastAPI',
-      'OpenAI API',
-      'Anthropic API',
-      'Gemini API',
-      'Model Abstraction',
+      'Python',
     ],
-    problem:
-      'Switching between LLM providers means adapting to different APIs, pricing models and performance characteristics. This project aims to abstract provider differences behind a single interface so teams can evaluate and route requests based on quality, latency and cost.',
   },
   {
     number: '06',
     name: 'AI Research Assistant',
-    description:
-      'An AI research assistant that gathers information from multiple sources, evaluates supporting evidence and produces structured research reports with citations.',
+    purpose:
+      'Build a multi-step AI research application that uses tools and external sources to gather information and produce structured reports with citations.',
     techFocus: [
-      'Python',
-      'LangGraph',
-      'Agentic AI',
-      'Search APIs',
+      'Multi-Step Reasoning',
       'Tool Integration',
+      'Search APIs',
+      'Cited Reports',
+      'LangGraph',
     ],
-    problem:
-      'Researching a topic across multiple sources is manual and time-consuming, and it is hard to assess the quality of evidence behind each finding. This project aims to automate information gathering, evaluate source credibility and produce structured reports with citations so users can trace conclusions back to their evidence.',
   },
 ];
 
-function RoadmapCard({ project }: { project: RoadmapProject }) {
+function RoadmapCard({ project, index }: { project: RoadmapProject; index: number }) {
   const { ref, isVisible } = useIntersectionObserver();
 
   return (
     <div
       ref={ref}
-      className={`bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 transition-all duration-700 ${
+      className={`group bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 transition-all duration-700 ${
         isVisible
           ? 'opacity-100 translate-y-0'
           : 'opacity-0 translate-y-10'
       }`}
+      style={{ transitionDelay: `${index * 80}ms` }}
     >
       <div className="p-6 sm:p-7">
         {/* Header row */}
@@ -134,26 +119,21 @@ function RoadmapCard({ project }: { project: RoadmapProject }) {
           </span>
         </div>
 
-        {/* Description */}
-        <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
-          {project.description}
-        </p>
-
-        {/* Problem statement */}
+        {/* Purpose & technical focus */}
         <div className="mb-6">
           <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-50 mb-2 flex items-center gap-2">
-            <Compass size={16} className="text-blue-600 dark:text-blue-400" />
-            Problem to Solve
+            <Target size={16} className="text-blue-600 dark:text-blue-400" />
+            Purpose &amp; Technical Focus
           </h4>
-          <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
-            {project.problem}
+          <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+            {project.purpose}
           </p>
         </div>
 
-        {/* Planned technology focus */}
+        {/* Key technology areas */}
         <div>
           <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-50 mb-3">
-            Planned Technology Focus
+            Key Technology Areas
           </h4>
           <div className="flex flex-wrap gap-2">
             {project.techFocus.map((tech) => (
@@ -199,15 +179,19 @@ export function Roadmap() {
             </h2>
           </div>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl">
-            Exploring practical applications of Generative AI, LLM engineering,
-            RAG, intelligent agents and production-ready AI systems.
+            These are planned projects that demonstrate my progression in AI
+            engineering -- from Retrieval-Augmented Generation and structured
+            output APIs, through evaluation and observability, to autonomous
+            agents and multi-step research. Each project is designed to build
+            on the last, expanding depth and breadth across the Generative AI
+            stack.
           </p>
         </div>
 
         {/* Roadmap cards */}
         <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-          {roadmapProjects.map((project) => (
-            <RoadmapCard key={project.number} project={project} />
+          {roadmapProjects.map((project, index) => (
+            <RoadmapCard key={project.number} project={project} index={index} />
           ))}
         </div>
       </div>
